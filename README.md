@@ -6,11 +6,11 @@
 1. 挂载U盘到/mnt/USB
 2. 确认makeIMG.sh最开始几行的配置是否正确
 3. 执行makeIMG.sh
-  1. 在提示Umount now? (Y/N)时修改以下文件（不要退出脚本）：
-    1. 在/media/B/cmdline.txt末尾加上` quiet init=/usr/lib/raspi-config/init_resize_ro.sh disable-root-ro=true`
-    2. 将init_resize_ro.sh复制到/media/R/usr/lib/raspi-config/init_resize_ro.sh并chmod +x
-  2. 继续执行脚本，选择umount
-  3. 看需求选择是否压缩镜像
+  * 在提示Umount now? (Y/N)时修改以下文件（不要退出脚本）：
+    * 在/media/B/cmdline.txt末尾加上` quiet init=/usr/lib/raspi-config/init_resize_ro.sh disable-root-ro=true`
+    * 将init_resize_ro.sh复制到/media/R/usr/lib/raspi-config/init_resize_ro.sh并chmod +x
+  * 继续执行脚本，选择umount
+  * 看需求选择是否压缩镜像
 4. umount你的U盘
 
 ## 脚本中的如下：
