@@ -1,7 +1,19 @@
 # rpi-img-packer
 树莓派镜像打包脚本（测试于2017-03-02版本）
 
-## 基本步骤如下：
+## 在只读状态下的树莓派向U盘生成镜像的完整流程
+因为只读状态下只能将镜像写入别的设备，所以需要一个U盘
+1. 挂载U盘到/mnt/USB
+2. 确认makeIMG.sh最开始几行的配置是否正确
+3. 执行makeIMG.sh
+  1. 在提示Umount now? (Y/N)时修改以下文件（不要退出脚本）：
+    1. 在/media/B/cmdline.txt末尾加上` quiet init=/usr/lib/raspi-config/init_resize_ro.sh disable-root-ro=true`
+    2. 将init_resize_ro.sh复制到/media/R/usr/lib/raspi-config/init_resize_ro.sh并chmod +x
+  2. 继续执行脚本，选择umount
+  3. 看需求选择是否压缩镜像
+4. umount你的U盘
+
+## 脚本中的如下：
 * 安装必要软件并清理apt-get
   * 同时删除`raspberrypi.img`和`raspberrypi.tar.gz`
 * 计算所需空间并建立全0的`raspberrypi.img`
