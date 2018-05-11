@@ -63,7 +63,15 @@ if [[ $A == Y* ]] || [[ $A == y* ]]; then
 	touch /media/R/var/lib/dhcp/dhclient.leases
 	cd
 	
-	#�����￪ʼ�޸��ļ����Ȳ�umount
+	#在这里开始修改文件
+	echo "Making auto-resizing script"
+	str=`cat /media/B/cmdline.txt`
+	str="disable-root-ro=true quiet init=/usr/lib/raspi-config/init_resize_ro.sh $str"
+	echo "$str" > $filename
+	cp "$(dirname "${BASH_SOURCE-$0}")/init_resize_ro.sh" /media/R/usr/lib/raspi-config/init_resize_ro.sh
+	chmod +x /media/R/usr/lib/raspi-config/init_resize_ro.sh
+	
+	#其他文件修改需要在这之前做
 	echo -e "Umount now? (Y/N)\c"
 	read B
 	if [[ $B == Y* ]] || [[ $B == y* ]]; then

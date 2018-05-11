@@ -173,10 +173,10 @@ mkdir -p /run/systemd
 mount /boot
 mount / -o remount,rw
 
-sed -i 's| disable-root-ro=true||' /boot/cmdline.txt
-sed -i 's| init=/usr/lib/raspi-config/init_resize_ro.sh||' /boot/cmdline.txt
+sed -i 's|disable-root-ro=true ||' /boot/cmdline.txt
+sed -i 's|init=/usr/lib/raspi-config/init_resize_ro.sh ||' /boot/cmdline.txt
 if ! grep -q splash /boot/cmdline.txt; then
-  sed -i "s/ quiet//g" /boot/cmdline.txt
+  sed -i "s/quiet //g" /boot/cmdline.txt
 fi
 sync
 
