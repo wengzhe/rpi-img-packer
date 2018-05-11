@@ -25,7 +25,7 @@ rm $IMG $TAR
 
 df=`df -P | awk '$6=="'$SRC_ROOT'"{print $3}'`
 dr=`df -P | awk '$6=="'$SRC_BOOT'"{print $2}'`
-df=`echo $df $dr | awk '{print int(($1+$2)*1.1/1024+1)*1024}'`
+df=`echo $df $dr | awk '{print int(($1+$2)*1.2/1024+1)*1024}'`
 
 echo "Making image size=${df}KB"
 dd if=/dev/zero of=$IMG bs=1K count=$df
@@ -33,6 +33,13 @@ parted $IMG --script -- mklabel msdos
 start=`fdisk -l $SRC_DEV | awk '$1=="'$SRC_DEV'p1"{print $2}'`
 start=`echo $start's'`
 end=`fdisk -l $SRC_DEV | awk '$1=="'$SRC_DEV'p1"{print $3}'`
+if [ $end -lt 262143 ]; then
+	echo -e "The boot partition is less than 128MB, would you like to expand it? (Y/N)\c"
+	read A
+	if [[ $A == Y* ]] || [[ $A == y* ]]; then
+		end=262143
+	fi
+fi
 end2=$[end+1]
 end=`echo $end's'`
 end2=`echo $end2's'`
