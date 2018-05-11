@@ -67,7 +67,7 @@ if [[ $A == Y* ]] || [[ $A == y* ]]; then
 	echo "Making auto-resizing script"
 	str=`cat /media/B/cmdline.txt`
 	str="disable-root-ro=true quiet init=/usr/lib/raspi-config/init_resize_ro.sh $str"
-	echo "$str" > $filename
+	echo "$str" > /media/B/cmdline.txt
 	cp "$(dirname "${BASH_SOURCE-$0}")/init_resize_ro.sh" /media/R/usr/lib/raspi-config/init_resize_ro.sh
 	chmod +x /media/R/usr/lib/raspi-config/init_resize_ro.sh
 	
