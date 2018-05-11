@@ -13,7 +13,7 @@ if [ $UID -ne 0 ]; then
 	exit 1
 fi
 
-if [ `df | grep 'root-ro' | wc -l` -e 0 ]; then
+if [ `df | grep 'root-ro' | wc -l` -eq 0 ]; then
 	echo "Installing needed packages..."
 	apt-get install -y dosfstools parted kpartx rsync
 	echo "Cleaning apt & raspberrypi.* ..."
