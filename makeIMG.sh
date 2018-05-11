@@ -8,16 +8,18 @@ SRC_DEV=/dev/mmcblk0
 DST=/mnt/USB
 
 if [ $UID -ne 0 ]; then
-    echo "Superuser privileges are required to run this script."
-    echo "e.g. \"sudo $0\""
-    exit 1
+	echo "Superuser privileges are required to run this script."
+	echo "e.g. \"sudo $0\""
+	exit 1
 fi
 
-echo "Installing needed packages..."
-apt-get install -y dosfstools parted kpartx rsync
+if [ `df | grep 'root-ro' | wc -l` -e 0 ]; then
+	echo "Installing needed packages..."
+	apt-get install -y dosfstools parted kpartx rsync
+	echo "Cleaning apt & raspberrypi.* ..."
+	apt-get clean && apt-get autoclean
+fi
 
-echo "Cleaning apt & raspberrypi.* ..."
-apt-get clean && apt-get autoclean
 cd $DST
 rm $IMG $TAR
 
