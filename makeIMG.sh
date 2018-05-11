@@ -13,6 +13,9 @@ if [ $UID -ne 0 ]; then
 	exit 1
 fi
 
+cd "$(dirname "${BASH_SOURCE-$0}")"
+SCRIPT_DIR=`pwd`
+
 if [ `df | grep 'root-ro' | wc -l` -eq 0 ]; then
 	echo "Installing needed packages..."
 	apt-get install -y dosfstools parted kpartx rsync
@@ -80,7 +83,7 @@ if [[ $A == Y* ]] || [[ $A == y* ]]; then
 		str=`cat /media/B/cmdline.txt`
 		str="disable-root-ro=true quiet init=/usr/lib/raspi-config/init_resize_ro.sh $str"
 		echo "$str" > /media/B/cmdline.txt
-		cp "$(dirname "${BASH_SOURCE-$0}")/init_resize_ro.sh" /media/R/usr/lib/raspi-config/init_resize_ro.sh
+		cp "${SCRIPT_DIR}/init_resize_ro.sh" /media/R/usr/lib/raspi-config/init_resize_ro.sh
 		chmod +x /media/R/usr/lib/raspi-config/init_resize_ro.sh
 	fi
 	
