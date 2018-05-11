@@ -64,12 +64,16 @@ if [[ $A == Y* ]] || [[ $A == y* ]]; then
 	cd
 	
 	#在这里开始修改文件
-	echo "Making auto-resizing script"
-	str=`cat /media/B/cmdline.txt`
-	str="disable-root-ro=true quiet init=/usr/lib/raspi-config/init_resize_ro.sh $str"
-	echo "$str" > /media/B/cmdline.txt
-	cp "$(dirname "${BASH_SOURCE-$0}")/init_resize_ro.sh" /media/R/usr/lib/raspi-config/init_resize_ro.sh
-	chmod +x /media/R/usr/lib/raspi-config/init_resize_ro.sh
+	echo -e "Use the resizing script with root-ro? (Y/N)\c"
+	read A
+	if [[ $A == Y* ]] || [[ $A == y* ]]; then
+		echo "Making auto-resizing script"
+		str=`cat /media/B/cmdline.txt`
+		str="disable-root-ro=true quiet init=/usr/lib/raspi-config/init_resize_ro.sh $str"
+		echo "$str" > /media/B/cmdline.txt
+		cp "$(dirname "${BASH_SOURCE-$0}")/init_resize_ro.sh" /media/R/usr/lib/raspi-config/init_resize_ro.sh
+		chmod +x /media/R/usr/lib/raspi-config/init_resize_ro.sh
+	fi
 	
 	#其他文件修改需要在这之前做
 	echo -e "Umount now? (Y/N)\c"
