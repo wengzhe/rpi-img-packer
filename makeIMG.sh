@@ -6,6 +6,8 @@ SRC_ROOT=/mnt/root-ro
 SRC_BOOT=/boot
 SRC_DEV=/dev/mmcblk0
 DST=/mnt/USB
+# Add 200MB in image for safety.
+ADD_SPACE=204800
 
 if [ $UID -ne 0 ]; then
 	echo "Superuser privileges are required to run this script."
@@ -28,7 +30,7 @@ rm $IMG $TAR
 
 df=`df -P | awk '$6=="'$SRC_ROOT'"{print $3}'`
 dr=`df -P | awk '$6=="'$SRC_BOOT'"{print $2}'`
-df=`echo $df $dr | awk '{print int(($1+$2+204800)/1024+1)*1024}'`  # add 200MB
+df=`echo $df $dr $ADD_SPACE | awk '{print int(($1+$2+$3)/1024+1)*1024}'`  # add 200MB
 
 echo "Making image size=${df}KB"
 dd if=/dev/zero of=$IMG bs=1K count=$df
