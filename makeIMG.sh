@@ -23,6 +23,12 @@ if [ `df | grep 'root-ro' | wc -l` -eq 0 ]; then
 	apt-get install -y dosfstools parted kpartx rsync
 	echo "Cleaning apt & raspberrypi.* ..."
 	apt-get clean && apt-get autoclean
+else
+	if [ `dpkg -l | grep "dosfstools" | wc -l` -lt 1 ] || [ `dpkg -l | grep "parted" | wc -l` -lt 1 ] || [ `dpkg -l | grep "kpartx" | wc -l` -lt 1 ] || [ `dpkg -l | grep "rsync" | wc -l` -lt 1 ]; then
+		echo "Info: You need install dosfstools parted kpartx rsync first"
+		echo "e.g. \"sudo apt-get install dosfstools parted kpartx rsync\""
+		exit 1
+	fi
 fi
 
 cd $DST
