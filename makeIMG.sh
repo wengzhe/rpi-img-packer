@@ -70,7 +70,7 @@ mkfs.ext4 $partRoot
 
 # make the same PTUUID
 PT_UUID=`blkid $SRC_DEV | awk '{print $2}' | awk -F'"' '{print $2}'`
-fdisk "${device}" << EOF > /dev/null
+fdisk "${loopdevice}" << EOF > /dev/null 2>&1
 p
 x
 i
