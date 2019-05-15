@@ -68,6 +68,18 @@ sleep 5
 mkfs.vfat -F 32 $partBoot
 mkfs.ext4 $partRoot
 
+# make the same PTUUID
+PT_UUID=`blkid $SRC_DEV | awk '{print $2}' | awk -F'"' '{print $2}'`
+fdisk "${device}" << EOF > /dev/null
+p
+x
+i
+0x${PT_UUID}
+r
+p
+w
+EOF
+
 echo -e "Continue to copy files? (Y/N)\c"
 read A
 if [[ $A == Y* ]] || [[ $A == y* ]]; then
